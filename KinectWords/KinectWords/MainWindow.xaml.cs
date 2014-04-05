@@ -36,5 +36,11 @@ namespace KinectWords
             Age5_6 newwin = new Age5_6();
             newwin.Show();
         }
+
+        private void buttonRead_Click(object sender, RoutedEventArgs e)
+        {
+            Read newwin = new Read();
+            newwin.Show();
+        }
     }
 }

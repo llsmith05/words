@@ -1,1 +1,16 @@
 C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\bin\Debug\KinectWords.exe.config
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\Age2_4.baml
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\MainWindow.baml
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\Age2_4.g.cs
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\MainWindow.g.cs
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\App.g.cs
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\KinectWords_MarkupCompile.cache
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\KinectWords.g.resources
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\KinectWords.Properties.Resources.resources
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\KinectWords.csproj.GenerateResource.Cache
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\bin\Debug\KinectWords.exe
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\bin\Debug\KinectWords.pdb
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\KinectWords.exe
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\KinectWords.pdb
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\Window1.baml
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\Window1.g.cs

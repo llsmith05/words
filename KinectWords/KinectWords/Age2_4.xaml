@@ -1,8 +1,9 @@
-﻿<Window x:Class="KinectWords.Age2_4"
+﻿<Window x:Name="Ages_2_4" x:Class="KinectWords.Age2_4"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Ages 2 - 4" Height="300" Width="300">
+        Title="Ages 2 - 4" Height="600" Width="600" ResizeMode="NoResize">
     <Grid>
-        
+        <Image x:Name="topImg" Height="200" Margin="50,50,50,0" VerticalAlignment="Top"/>
+
     </Grid>
 </Window>

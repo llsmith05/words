@@ -3,6 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Ages 5 - 6" Height="600" Width="600">
     <Grid>
-        
+        <TextBlock x:Name="Letter1" HorizontalAlignment="Left" Margin="103,157,0,0" TextWrapping="Wrap" Text="C" VerticalAlignment="Top" Height="89" Width="81" FontSize="72" FontWeight="Bold"/>
+        <TextBlock x:Name="Letter2" HorizontalAlignment="Left" Margin="189,157,0,0" TextWrapping="Wrap" Text="A" VerticalAlignment="Top" Height="89" Width="81" FontSize="72" FontWeight="Bold"/>
+        <TextBlock x:Name="Letter3" HorizontalAlignment="Left" Margin="275,157,0,0" TextWrapping="Wrap" Text="T" VerticalAlignment="Top" Height="89" Width="81" RenderTransformOrigin="2.021,0.415" FontSize="72" FontWeight="Bold"/>
+
     </Grid>
 </Window>

@@ -7,6 +7,9 @@
         <Button x:Name="button2_4" Content="Ages 2-4" HorizontalAlignment="Left" Margin="69,134,0,0" VerticalAlignment="Top" Width="113" Height="40" BorderThickness="2" Background="#FF0F99E8" BorderBrush="Black" FontSize="16" Click="button2_4_Click"/>
         <Button x:Name="button5_6" Content="Ages 5-6" HorizontalAlignment="Left" Margin="69,191,0,0" VerticalAlignment="Top" Width="113" Height="40" BorderThickness="2" Background="#FF0F99E8" BorderBrush="Black" FontSize="16" Click="button5_6_Click"/>
         <Button x:Name="buttonRead" Content="Read" HorizontalAlignment="Left" Margin="69,251,0,0" VerticalAlignment="Top" Width="113" Height="40" BorderThickness="2" Background="#FF0F99E8" BorderBrush="Black" FontSize="16" Click="buttonRead_Click" RenderTransformOrigin="0.582,2.349" IsCancel="True"/>
+        <StatusBar HorizontalAlignment="Left" Height="52" Margin="10,507,0,0" VerticalAlignment="Top" Width="497">
+            <TextBlock x:Name="statusText" TextWrapping="Wrap" Text="TextBlock" Height="28" Width="332"/>
+        </StatusBar>
 
     </Grid>
 </Window>

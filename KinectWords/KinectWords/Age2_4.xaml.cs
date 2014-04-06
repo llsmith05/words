@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,10 @@ namespace KinectWords
         public Age2_4()
         {
             InitializeComponent();
+            Uri uri = new Uri("cat.gif", UriKind.Absolute);
+            ImageSource imgSource = new BitmapImage(uri);
+            topImg.Source = imgSource;
+
         }
     }
 }

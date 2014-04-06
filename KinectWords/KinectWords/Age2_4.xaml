@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Ages 2 - 4" Height="600" Width="600" ResizeMode="NoResize">
     <Grid>
-        <Image x:Name="topImg" Height="200" Margin="50,50,50,0" VerticalAlignment="Top"/>
+        <Image x:Name="topImg" Height="200" Margin="50,50,50,0" VerticalAlignment="Top" Width="500"/>
 
     </Grid>
 </Window>

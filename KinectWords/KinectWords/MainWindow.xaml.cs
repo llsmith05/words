@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Speech.AudioFormat;
 using Microsoft.Speech.Recognition;
+using System.IO;
 
 namespace KinectWords
 {
@@ -89,6 +90,81 @@ namespace KinectWords
 
             return null;
         }
+                //Start items on window load
+         private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            foreach (var potentialSensor in KinectSensor.KinectSensors)
+            {
+                if (potentialSensor.Status == KinectStatus.Connected)
+                {
+                    this.sensor = potentialSensor;
+                    break;
+                }
+            }
 
+            if (null != this.sensor)
+            {
+                //Turn on color stream
+                this.sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+
+                //allocate space in byte array for pixel data
+                this.colorPixels = new byte[this.sensor.ColorStream.FramePixelDataLength];
+
+                //create bitmap to be displayed
+                this.colorBmp = new WriteableBitmap(this.sensor.ColorStream.FrameWidth, this.sensor.ColorStream.FrameHeight, 96, 96, PixelFormats.Bgr32, null);
+
+                //Point image in xaml to the bitmap above
+                //this.imgCanvas.Source = this.colorBmp;
+
+                //add event handler for incoming frames
+                //this.sensor.ColorFrameReady += sensor_ColorFrameReady;
+
+                //start the sensor
+                try
+                {
+                    this.statusText.Text = "Hello";
+                    this.sensor.Start();
+                }
+                catch (IOException)
+                {
+                    this.sensor = null;
+                }
+            }
+
+            if (null == this.sensor)
+            {
+                this.statusText.Text = "No Kinect Found!";
+            }
+
+            RecognizerInfo ri = GetKinectRecognizer();
+            if (null != ri)
+            {
+                //recognitionSpans = new List<Span> { pictureSpan };
+
+                this.speechEngine = new SpeechRecognitionEngine(ri.Id);
+
+            }
+            else
+            {
+                this.statusText.Text = "No Speech Engine Found";
+            }
+        }
+
+ 
+  
+         void StopKinect(KinectSensor sensor)
+         {
+             if (sensor != null)
+             {
+                 sensor.Stop();
+                 sensor.AudioSource.Stop();
+             }
+         }
+
+        //Shutdown sensor
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.sensor.Stop();
+        }
     }
 }

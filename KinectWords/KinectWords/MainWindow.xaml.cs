@@ -64,10 +64,12 @@ namespace KinectWords
             newwin.Show();
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
 
+        private void buttonQuit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
+
 
         /// <summary>
         /// Gets the metadata for the speech recognizer (acoustic model) most suitable to
@@ -232,8 +234,6 @@ namespace KinectWords
              }
          }
 
-
-
          void StopKinect(KinectSensor sensor)
          {
              if (sensor != null)
@@ -248,5 +248,7 @@ namespace KinectWords
         {
             this.sensor.Stop();
         }
+
+
     }
 }

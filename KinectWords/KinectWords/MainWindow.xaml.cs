@@ -114,10 +114,10 @@ namespace KinectWords
                 this.colorBmp = new WriteableBitmap(this.sensor.ColorStream.FrameWidth, this.sensor.ColorStream.FrameHeight, 96, 96, PixelFormats.Bgr32, null);
 
                 //Point image in xaml to the bitmap above
-                //this.imgCanvas.Source = this.colorBmp;
+                this.kinect_Image.Source = this.colorBmp;
 
                 //add event handler for incoming frames
-                //this.sensor.ColorFrameReady += sensor_ColorFrameReady;
+                this.sensor.ColorFrameReady += sensor_ColorFrameReady;
 
                 //start the sensor
                 try
@@ -143,15 +143,97 @@ namespace KinectWords
 
                 this.speechEngine = new SpeechRecognitionEngine(ri.Id);
 
+                // Create a grammar from grammar definition XML file.
+                using (var memoryStream = new MemoryStream(Encoding.ASCII.GetBytes(Properties.Resources.SpeechGrammar)))
+                {
+                    var g = new Grammar(memoryStream);
+                    speechEngine.LoadGrammar(g);
+                }
+
+                speechEngine.SpeechRecognized += SpeechRecognized;
+                speechEngine.SpeechRecognitionRejected += SpeechRejected;
+
+                // For long recognition sessions (a few hours or more), it may be beneficial to turn off adaptation of the acoustic model. 
+                // This will prevent recognition accuracy from degrading over time.
+                ////speechEngine.UpdateRecognizerSetting("AdaptationOn", 0);
+
+                speechEngine.SetInputToAudioStream(
+                    sensor.AudioSource.Start(), new SpeechAudioFormatInfo(EncodingFormat.Pcm, 16000, 16, 1, 32000, 2, null));
+                speechEngine.RecognizeAsync(RecognizeMode.Multiple);
             }
             else
             {
                 this.statusText.Text = "No Speech Engine Found";
             }
         }
+         /// <summary>
+         /// Handler for recognized speech events.
+         /// </summary>
+         /// <param name="sender">object sending the event.</param>
+         /// <param name="e">event arguments.</param>
+         private void SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+         {
+             // Speech utterance confidence below which we treat speech as if it hadn't been heard
+             const double ConfidenceThreshold = 0.3;
 
- 
-  
+             ClearRecognitionHighlights();
+
+             if (e.Result.Confidence >= ConfidenceThreshold)
+             {
+                 switch (e.Result.Semantics.Value.ToString())
+                 {
+
+                     case "QUIT":
+                         this.Close();
+                         break;
+                 }
+             }
+         }
+
+         /// <summary>
+         /// Remove any highlighting from recognition instructions.
+         /// </summary>
+         private void ClearRecognitionHighlights()
+         {
+             statusText.Text = "not recognized word";
+             //      foreach (Span span in recognitionSpans)
+             //      {
+             //           span.Foreground = (Brush)this.Resources[MediumGreyBrushKey];
+             //           span.FontWeight = FontWeights.Normal;
+             //      }
+         }
+
+         /// <summary>
+         /// Handler for rejected speech events.
+         /// </summary>
+         /// <param name="sender">object sending the event.</param>
+         /// <param name="e">event arguments.</param>
+         private void SpeechRejected(object sender, SpeechRecognitionRejectedEventArgs e)
+         {
+             ClearRecognitionHighlights();
+         }
+         //Event handler for colorframe
+         void sensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
+         {
+             using (ColorImageFrame colorFrame = e.OpenColorImageFrame())
+             {
+                 if (colorFrame != null)
+                 {
+                     //copy from frame to temp array
+                     colorFrame.CopyPixelDataTo(this.colorPixels);
+
+                     //write pixel data to bitmap
+                     this.colorBmp.WritePixels(
+                         new Int32Rect(0, 0, this.colorBmp.PixelWidth, this.colorBmp.PixelHeight),
+                         this.colorPixels,
+                         this.colorBmp.PixelWidth * sizeof(int),
+                         0);
+                 }
+             }
+         }
+
+
+
          void StopKinect(KinectSensor sensor)
          {
              if (sensor != null)

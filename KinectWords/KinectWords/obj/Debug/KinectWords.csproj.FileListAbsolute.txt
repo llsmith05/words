@@ -33,3 +33,10 @@ C:\Users\Peemin\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\KinectW
 C:\Users\Peemin\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\KinectWords.exe
 C:\Users\Peemin\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\Read.baml
 C:\Users\Peemin\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\Read.g.cs
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\bin\Debug\Microsoft.Kinect.Toolkit.dll
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\bin\Debug\Microsoft.Samples.Kinect.WpfViewers.dll
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\bin\Debug\Microsoft.Samples.Kinect.WpfViewers.pdb
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\bin\Debug\Microsoft.Kinect.Toolkit.pdb
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\KinectWords.csprojResolveAssemblyReference.cache
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\Read.baml
+C:\Users\Leland\Documents\GitHub\words\KinectWords\KinectWords\obj\Debug\Read.g.cs

@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\Peemin\Documents\GitHub\words\KinectWpfViewers\obj\Debug\
+C:\Users\Leland\Documents\GitHub\words\KinectWpfViewers\obj\Debug\
 Microsoft.Samples.Kinect.WpfViewers
 none
 false
@@ -12,7 +12,7 @@ DEBUG;TRACE
 
 7-1694449150
 
-142090245499
+14-300277184
 13-216429321
 KinectSensorChooser.xaml;KinectAudioViewer.xaml;KinectDepthViewer.xaml;KinectColorViewer.xaml;KinectDiagnosticViewer.xaml;KinectSettings.xaml;KinectSkeletonViewer.xaml;
 

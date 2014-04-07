@@ -49,3 +49,4 @@ C:\Users\Peemin\Documents\GitHub\words\Microsoft.Kinect.Toolkit\obj\Debug\Micros
 C:\Users\Peemin\Documents\GitHub\words\Microsoft.Kinect.Toolkit\obj\Debug\Microsoft.Kinect.Toolkit.csproj.GenerateResource.Cache
 C:\Users\Peemin\Documents\GitHub\words\Microsoft.Kinect.Toolkit\obj\Debug\Microsoft.Kinect.Toolkit.dll
 C:\Users\Peemin\Documents\GitHub\words\Microsoft.Kinect.Toolkit\obj\Debug\Microsoft.Kinect.Toolkit.pdb
+C:\Users\Leland\Documents\GitHub\words\Microsoft.Kinect.Toolkit\obj\Debug\Microsoft.Kinect.Toolkit.csprojResolveAssemblyReference.cache

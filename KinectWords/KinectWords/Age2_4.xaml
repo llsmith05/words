@@ -3,7 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Ages 2 - 4" Height="600" Width="600" ResizeMode="NoResize">
     <Grid>
-        <Image x:Name="topImg" Height="200" Margin="50,50,50,0" VerticalAlignment="Top" Width="500"/>
+        <Image x:Name="topImg" Height="200" Margin="50,50,44,0" VerticalAlignment="Top" Width="500" Source="catImg"/>
+        <TextBox x:Name="letter1" Height="200" Margin="50,314,398,0" TextWrapping="Wrap" Text="C" VerticalAlignment="Top" FontSize="128" FontWeight="Bold"/>
+        <TextBox x:Name="letter2" HorizontalAlignment="Left" Height="200" Margin="222,314,0,0" TextWrapping="Wrap" Text="A" VerticalAlignment="Top" Width="146" TextChanged="TextBox_TextChanged" FontSize="128" FontWeight="Bold"/>
+        <TextBox x:Name="letter3" Height="200" Margin="404,314,44,0" TextWrapping="Wrap" Text="T" VerticalAlignment="Top" FontSize="128" FontWeight="Bold"/>
 
     </Grid>
 </Window>

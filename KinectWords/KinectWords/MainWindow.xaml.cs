@@ -41,6 +41,8 @@ namespace KinectWords
         // List of all UI span elements used to select recognized text.
         private List<Span> recognitionSpans;
 
+        private Read newwin = new Read();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -48,20 +50,23 @@ namespace KinectWords
 
         private void button2_4_Click(object sender, RoutedEventArgs e)
         {
-            Age2_4 newwin = new Age2_4();
-            newwin.Show();
+            newRead("Age 4-6");
         }
 
         private void button5_6_Click(object sender, RoutedEventArgs e)
         {
-            Age5_6 newwin = new Age5_6();
-            newwin.Show();
+            newRead("Age 5 - 6");
         }
 
         private void buttonRead_Click(object sender, RoutedEventArgs e)
         {
-            Read newwin = new Read();
-            newwin.Show();
+            newRead("Read");
+        }
+
+        private void newRead(string title)
+        {
+            newwin.show(title);
+            this.Close();
         }
 
 
@@ -185,8 +190,28 @@ namespace KinectWords
                  switch (e.Result.Semantics.Value.ToString())
                  {
 
+                     case "AGE2_4":
+                         newRead("Age 2 - 4");
+                         break;
+                     case "AGE5_6":
+                         newRead("Age 5 - 6");
+                         break;
+                     case "READ":
+                         newRead("Read");
+                         break;
+                     case "DONE":
                      case "QUIT":
+                         if (null != newwin)
+                         {
+                             newwin.close();
+                         }
                          this.Close();
+                         break;
+                     case "CAT":
+                         if (null != newwin)
+                         {
+                             newwin.speech("CAT");
+                         }
                          break;
                  }
              }
@@ -203,6 +228,10 @@ namespace KinectWords
              //           span.Foreground = (Brush)this.Resources[MediumGreyBrushKey];
              //           span.FontWeight = FontWeights.Normal;
              //      }
+             if (null != newwin)
+             {
+                 newwin.speech("not recognized");
+             }
          }
 
          /// <summary>

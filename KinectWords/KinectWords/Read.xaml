@@ -3,6 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Read" Height="600" Width="600">
     <Grid>
-        
+        <Image x:Name="topImg" HorizontalAlignment="Left" Height="273" Margin="24,85,0,0" VerticalAlignment="Top" Width="529" UseLayoutRounding="True" SnapsToDevicePixels="True"/>
+        <TextBlock x:Name="text1" HorizontalAlignment="Left" Margin="50,375,0,0" TextWrapping="Wrap" Text="TextBlock1" VerticalAlignment="Top" RenderTransformOrigin="-3.967,-4.493" Height="82" Width="107"/>
+        <TextBlock x:Name="text2" HorizontalAlignment="Left" Margin="162,375,0,0" TextWrapping="Wrap" Text="TextBlock2" VerticalAlignment="Top" RenderTransformOrigin="-3.967,-4.493" Height="82" Width="107"/>
+        <TextBlock x:Name="text3" HorizontalAlignment="Left" Margin="269,375,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-3.967,-4.493" Height="82" Width="107"><Run Text="TextBlock3"/><LineBreak/><Run/></TextBlock>
+        <Button x:Name="buttonMenu" Content="Done" HorizontalAlignment="Left" Margin="44,503,0,0" VerticalAlignment="Top" Width="113" Height="40" BorderThickness="2" Background="#FF0F99E8" BorderBrush="Black" FontSize="16" Click="ButtonMenu_Click"/>
+        <TextBlock x:Name="statusText" HorizontalAlignment="Left" Margin="248,503,0,0" TextWrapping="Wrap" Text="Status" VerticalAlignment="Top" Height="40" Width="163"/>
+
     </Grid>
 </Window>

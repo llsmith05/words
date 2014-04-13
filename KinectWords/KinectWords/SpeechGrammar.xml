@@ -2,11 +2,36 @@
   <rule id="rootRule">
     <one-of>
       <item>
-        <tag>PICTURE</tag>
+        <tag>AGE2_4</tag>
         <one-of>
-          <item> click </item>
-          <item> take a picture</item>
-          <item> cheese </item>
+          <item> two </item>
+          <item> three </item>
+          <item> four </item>
+        </one-of>
+      </item>
+      <item>
+        <tag>AGE5_6</tag>
+        <one-of>
+          <item> five </item>
+          <item> six </item>
+        </one-of>
+      </item>
+      <item>
+        <tag>READ</tag>
+        <one-of>
+          <item> read </item>
+        </one-of>
+      </item>
+      <item>
+        <tag>DONE</tag>
+        <one-of>
+          <item> done </item>
+        </one-of>
+      </item>
+      <item>
+        <tag>NEXT</tag>
+        <one-of>
+          <item> next </item>
         </one-of>
       </item>
       <item>
@@ -15,6 +40,24 @@
           <item> quit </item>
           <item> close</item>
           <item> exit </item>
+        </one-of>
+      </item>
+      <item>
+        <tag>CAT</tag>
+        <one-of>
+          <item> cat </item>
+        </one-of>
+      </item>
+      <item>
+        <tag>DOG</tag>
+        <one-of>
+          <item> dog </item>
+        </one-of>
+      </item>
+      <item>
+        <tag>BED</tag>
+        <one-of>
+          <item> bed </item>
         </one-of>
       </item>
     </one-of>

@@ -19,23 +19,37 @@ namespace KinectWords
     /// </summary>
     public partial class Read : Window
     {
-        WordObject cat = new WordObject("CAT", "C", "A", "T");
+        List<WordObject> Words = new List<WordObject>();
+        int count;
         public Read()
         {
             InitializeComponent();
+            WordObject cat = new WordObject("CAT", "C", "A", "T");
+            WordObject dog = new WordObject("DOG", "D", "O", "G");
+            WordObject bed = new WordObject("BED", "B", "E", "D");
+            this.Words.Add(cat);
+            this.Words.Add(dog);
+            this.Words.Add(bed);
+            this.count = 0;
         }
 
         public void show(string title)
         {
             this.Title = title;
+            show();
+
+        }
+
+        public void show()
+        {
             this.text1.FontSize = 72;
-            this.text1.Text = cat.getText1();
+            this.text1.Text = Words[count].getText1();
 
             this.text2.FontSize = 72;
-            this.text2.Text = cat.getText2();
+            this.text2.Text = Words[count].getText2();
 
             this.text3.FontSize = 72;
-            this.text3.Text = cat.getText3();
+            this.text3.Text = Words[count].getText3();
 
             this.Show();
 
@@ -47,15 +61,35 @@ namespace KinectWords
             close();
         }
 
-        public void speech(string label)
+        private void ButtonMenu_Next(object sender, RoutedEventArgs e)
         {
-            if (label == cat.getWord())
+            nextWord();
+        }
+
+        public void nextWord()
+        {
+            count = count + 1;
+            if (count < Words.Count)
             {
-                this.statusText.Text = "Cat was spoken";
+                this.statusText.Text = count.ToString() + " " + Words.Count.ToString();
+                show();
             }
             else
             {
-                this.statusText.Text = label;
+                this.statusText.Text = "No more Words";
+            }
+            
+        }
+
+        public void speech(string label)
+        {
+            if (label == Words[count].getWord())
+            {
+                this.statusText.Text = "Good Job";
+            }
+            else
+            {
+                this.statusText.Text = "Try Again";
             }
         }
 
@@ -63,6 +97,8 @@ namespace KinectWords
         {
             this.Close();
         }
+
+
 
     }
 }

@@ -199,6 +199,9 @@ namespace KinectWords
                      case "READ":
                          newRead("Read");
                          break;
+                     case "NEXT":
+                         newwin.nextWord();
+                         break;
                      case "DONE":
                      case "QUIT":
                          if (null != newwin)

@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using Microsoft.Speech.AudioFormat;
 using Microsoft.Speech.Recognition;
 using System.IO;
+using GestureFramework;
 
 namespace KinectWords
 {
@@ -41,8 +42,14 @@ namespace KinectWords
         // List of all UI span elements used to select recognized text.
         private List<Span> recognitionSpans;
 
-        private Read newwin = new Read();
+        private GestureMap _gestureMap;
+        private Dictionary<int, GestureMapState> _gestureMaps;
+        private const string GestureFileName = "gestures.xml";
 
+        public int PlayerId;
+
+        private Read newwin = new Read();
+                
         public MainWindow()
         {
             InitializeComponent();
@@ -100,6 +107,13 @@ namespace KinectWords
                 //Start items on window load
          private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Load the XML File that contains the gesture configuration
+            _gestureMap = new GestureMap();
+            _gestureMap.LoadGesturesFromXml(GestureFileName);
+
+            // Instantiate the in memory representation of the gesture state for each player
+            _gestureMaps = new Dictionary<int, GestureMapState>();
+
             foreach (var potentialSensor in KinectSensor.KinectSensors)
             {
                 if (potentialSensor.Status == KinectStatus.Connected)
@@ -114,6 +128,9 @@ namespace KinectWords
                 //Turn on color stream
                 this.sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
 
+                //enable skeleton stream
+                this.sensor.SkeletonStream.Enable();
+
                 //allocate space in byte array for pixel data
                 this.colorPixels = new byte[this.sensor.ColorStream.FramePixelDataLength];
 
@@ -125,6 +142,9 @@ namespace KinectWords
 
                 //add event handler for incoming frames
                 this.sensor.ColorFrameReady += sensor_ColorFrameReady;
+
+                //add event handler for AllFrameReady
+                this.sensor.AllFramesReady += sensor_AllFramesReady;
 
                 //start the sensor
                 try
@@ -173,6 +193,12 @@ namespace KinectWords
                 this.statusText.Text = "No Speech Engine Found";
             }
         }
+
+         void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
+         {
+             throw new NotImplementedException();
+         }
+
          /// <summary>
          /// Handler for recognized speech events.
          /// </summary>

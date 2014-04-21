@@ -1,0 +1,8 @@
+﻿<Gestures GestureResetTimeout="500">
+  <Gesture Description="Previous Screen" MaxExecutionTime="1000" MappedKeyCode="PREVIOUS">
+    <GestureComponent FirstJoint="WristLeft" SecondJoint="ShoulderLeft" EndingRelationship="LeftOf" BeginningRelationship="RightOf" />
+  </Gesture>
+  <Gesture Description="Next Screen" MaxExecutionTime="1000" MappedKeyCode="NEXT">
+    <GestureComponent FirstJoint="WristRight" SecondJoint="ShoulderRight" EndingRelationship="RightOf" BeginningRelationship="LeftOf" />
+  </Gesture>
+</Gestures>

@@ -12,5 +12,12 @@
         </StatusBar>
         <Image x:Name="kinect_Image" HorizontalAlignment="Left" Height="143" Margin="257,148,0,0" VerticalAlignment="Top" Width="178"/>
         <Button x:Name="buttonQuit" Content="Quit" HorizontalAlignment="Left" Margin="69,314,0,0" VerticalAlignment="Top" Width="113" Height="40" BorderThickness="2" Background="#FF0F99E8" BorderBrush="Black" FontSize="16" Click="buttonQuit_Click" RenderTransformOrigin="0.582,2.349" IsCancel="True"/>
+        <RichTextBox x:Name="debugMsg" HorizontalAlignment="Left" Height="47" Margin="23,455,0,0" VerticalAlignment="Top" Width="371">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="RichTextBox"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
     </Grid>
 </Window>

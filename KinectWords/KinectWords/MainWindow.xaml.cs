@@ -19,6 +19,8 @@ using Microsoft.Speech.AudioFormat;
 using Microsoft.Speech.Recognition;
 using System.IO;
 using GestureFramework;
+using System.Drawing;
+using WindowsInput;
 
 namespace KinectWords
 {
@@ -42,6 +44,8 @@ namespace KinectWords
         // List of all UI span elements used to select recognized text.
         private List<Span> recognitionSpans;
 
+        //components for gesture recognition
+        private Bitmap _bitmap;
         private GestureMap _gestureMap;
         private Dictionary<int, GestureMapState> _gestureMaps;
         private const string GestureFileName = "gestures.xml";
@@ -143,7 +147,7 @@ namespace KinectWords
                 //add event handler for incoming frames
                 this.sensor.ColorFrameReady += sensor_ColorFrameReady;
 
-                //add event handler for AllFrameReady
+                //add event handler for AllFramesReady
                 this.sensor.AllFramesReady += sensor_AllFramesReady;
 
                 //start the sensor
@@ -196,7 +200,73 @@ namespace KinectWords
 
          void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
          {
-             throw new NotImplementedException();
+             if (_gestureMap.MessagesWaiting)
+             {
+                 foreach (var msg in _gestureMap.Messages)
+                 {
+                     debugMsg.AppendText(msg + "\r");
+                 }
+                 debugMsg.ScrollToEnd();
+                 _gestureMap.MessagesWaiting = false;
+             }
+
+             //SensorDepthFrameReady(e);
+             SensorSkeletonFrameReady(e);
+             //video.Image = _bitmap;
+         }
+
+         private void SensorSkeletonFrameReady(AllFramesReadyEventArgs e)
+         {
+             using (SkeletonFrame skeletonFrameData = e.OpenSkeletonFrame())
+             {
+                 if (skeletonFrameData == null)
+                 {
+                     return;
+                 }
+
+                 var allSkeletons = new Skeleton[skeletonFrameData.SkeletonArrayLength];
+                 skeletonFrameData.CopySkeletonDataTo(allSkeletons);
+
+                 //loop for each skeleton frame
+                 foreach (Skeleton sd in allSkeletons)
+                 {
+                     // If this skeleton is no longer being tracked, skip it
+                     if (sd.TrackingState != SkeletonTrackingState.Tracked)
+                     {
+                         continue;
+                     }
+
+                     // If there is not already a gesture state map for this skeleton, then create one
+                     if (!_gestureMaps.ContainsKey(sd.TrackingId))
+                     {
+                         var mapstate = new GestureMapState(_gestureMap);
+                         _gestureMaps.Add(sd.TrackingId, mapstate);
+                     }
+
+                     var keycode = _gestureMaps[sd.TrackingId].Evaluate(sd, false, _bitmap.Width, _bitmap.Height);
+                     GetWaitingMessages(_gestureMaps);
+
+                     if (keycode != VirtualKeyCode.NONAME)
+                     {
+                         debugMsg.AppendText("Gesture accepted from player " + sd.TrackingId + "\r");
+                         debugMsg.ScrollToEnd();
+                         debugMsg.AppendText("Command passed to System: " + keycode + "\r");
+                         debugMsg.ScrollToEnd();
+                         //InputSimulator.SimulateKeyPress(keycode);
+                         _gestureMaps[sd.TrackingId].ResetAll(sd);
+                     }
+
+                     // This break prevents multiple player data from being confused during evaluation.
+                     // If one were going to dis-allow multiple players, this trackingId would facilitate
+                     // that feat.
+                     PlayerId = sd.TrackingId;
+
+
+                     //if (_bitmap != null)
+                         //_bitmap = AddSkeletonToDepthBitmap(sd, _bitmap, true);
+
+                 }
+             }
          }
 
          /// <summary>
@@ -288,6 +358,23 @@ namespace KinectWords
                          this.colorPixels,
                          this.colorBmp.PixelWidth * sizeof(int),
                          0);
+                 }
+             }
+         }
+
+         protected void GetWaitingMessages(Dictionary<int, GestureMapState> gestureMapDict)
+         {
+             foreach (var map in _gestureMaps)
+             {
+                 if (map.Value.MessagesWaiting)
+                 {
+                     foreach (var msg in map.Value.Messages)
+                     {
+                         debugMsg.AppendText(msg + "\r");
+                         debugMsg.ScrollToEnd();
+                     }
+                     map.Value.Messages.Clear();
+                     map.Value.MessagesWaiting = false;
                  }
              }
          }

@@ -127,9 +127,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\GestureFramework\GestureFramework.csproj">
-      <Project>{73ca447a-590a-42b6-ac2b-38ea2038007d}</Project>
-      <Name>GestureFramework</Name>
+    <ProjectReference Include="..\..\KinectToolbox\Kinect.Toolbox.csproj">
+      <Project>{2c84ce43-cdab-4541-a55a-7f849e8ac247}</Project>
+      <Name>Kinect.Toolbox</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj">
       <Project>{4de23893-27e7-423f-9bb6-ba21dac2c45e}</Project>

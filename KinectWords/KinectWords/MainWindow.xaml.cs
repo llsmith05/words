@@ -18,9 +18,9 @@ using System.Windows.Shapes;
 using Microsoft.Speech.AudioFormat;
 using Microsoft.Speech.Recognition;
 using System.IO;
-using GestureFramework;
 using System.Drawing;
 using WindowsInput;
+using Kinect.Toolbox;
 
 namespace KinectWords
 {
@@ -44,15 +44,9 @@ namespace KinectWords
         // List of all UI span elements used to select recognized text.
         private List<Span> recognitionSpans;
 
-        //components for gesture recognition
-        private Bitmap _bitmap;
-        private GestureMap _gestureMap;
-        private Dictionary<int, GestureMapState> _gestureMaps;
-        private const string GestureFileName = "gestures.xml";
-
-        public int PlayerId;
-
         private Read newwin = new Read();
+
+        private SwipeGestureDetector gestureDetector;
                 
         public MainWindow()
         {
@@ -111,12 +105,10 @@ namespace KinectWords
                 //Start items on window load
          private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // Load the XML File that contains the gesture configuration
-            _gestureMap = new GestureMap();
-            _gestureMap.LoadGesturesFromXml(GestureFileName);
+            debugMsg.AppendText("Starting text!");
 
-            // Instantiate the in memory representation of the gesture state for each player
-            _gestureMaps = new Dictionary<int, GestureMapState>();
+            this.gestureDetector = new SwipeGestureDetector();
+            gestureDetector.MinimalPeriodBetweenGestures = 1000;
 
             foreach (var potentialSensor in KinectSensor.KinectSensors)
             {
@@ -147,8 +139,12 @@ namespace KinectWords
                 //add event handler for incoming frames
                 this.sensor.ColorFrameReady += sensor_ColorFrameReady;
 
+                //event handles for 
+                this.sensor.SkeletonFrameReady += this.SensorSkeletonFrameReady;
+                this.gestureDetector.OnGestureDetected += on_GestureDetected;
+
                 //add event handler for AllFramesReady
-                this.sensor.AllFramesReady += sensor_AllFramesReady;
+                //this.sensor.AllFramesReady += sensor_AllFramesReady;
 
                 //start the sensor
                 try
@@ -164,7 +160,7 @@ namespace KinectWords
 
             if (null == this.sensor)
             {
-                this.statusText.Text = "No Kinect Found!";
+                this.statusText.Text = "No Kinect Found! \r";
             }
 
             RecognizerInfo ri = GetKinectRecognizer();
@@ -194,77 +190,47 @@ namespace KinectWords
             }
             else
             {
-                this.statusText.Text = "No Speech Engine Found";
+                this.statusText.Text = "No Speech Engine Found \r";
             }
         }
 
-         void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
+         private void on_GestureDetected(string gest)
          {
-             if (_gestureMap.MessagesWaiting)
+             if (gest == "SwipeToRight")
              {
-                 foreach (var msg in _gestureMap.Messages)
-                 {
-                     debugMsg.AppendText(msg + "\r");
-                 }
-                 debugMsg.ScrollToEnd();
-                 _gestureMap.MessagesWaiting = false;
+                 debugMsg.AppendText("Right swipe");
              }
 
-             //SensorDepthFrameReady(e);
-             SensorSkeletonFrameReady(e);
-             //video.Image = _bitmap;
+             if (gest == "SwipeToLeft")
+             {
+                 debugMsg.AppendText("Left swipe");
+             }
          }
 
-         private void SensorSkeletonFrameReady(AllFramesReadyEventArgs e)
+         private void SensorSkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
          {
              using (SkeletonFrame skeletonFrameData = e.OpenSkeletonFrame())
              {
                  if (skeletonFrameData == null)
                  {
+                     debugMsg.AppendText("No skeleton!");
                      return;
                  }
 
                  var allSkeletons = new Skeleton[skeletonFrameData.SkeletonArrayLength];
                  skeletonFrameData.CopySkeletonDataTo(allSkeletons);
 
-                 //loop for each skeleton frame
+                 //loop through skeleton frames
                  foreach (Skeleton sd in allSkeletons)
                  {
-                     // If this skeleton is no longer being tracked, skip it
-                     if (sd.TrackingState != SkeletonTrackingState.Tracked)
+                     if (sd.TrackingState == SkeletonTrackingState.Tracked)
+                     {
+                         gestureDetector.Add(sd.Joints[JointType.HandRight].Position, sensor);
+                     }
+                     else
                      {
                          continue;
                      }
-
-                     // If there is not already a gesture state map for this skeleton, then create one
-                     if (!_gestureMaps.ContainsKey(sd.TrackingId))
-                     {
-                         var mapstate = new GestureMapState(_gestureMap);
-                         _gestureMaps.Add(sd.TrackingId, mapstate);
-                     }
-
-                     var keycode = _gestureMaps[sd.TrackingId].Evaluate(sd, false, _bitmap.Width, _bitmap.Height);
-                     GetWaitingMessages(_gestureMaps);
-
-                     if (keycode != VirtualKeyCode.NONAME)
-                     {
-                         debugMsg.AppendText("Gesture accepted from player " + sd.TrackingId + "\r");
-                         debugMsg.ScrollToEnd();
-                         debugMsg.AppendText("Command passed to System: " + keycode + "\r");
-                         debugMsg.ScrollToEnd();
-                         //InputSimulator.SimulateKeyPress(keycode);
-                         _gestureMaps[sd.TrackingId].ResetAll(sd);
-                     }
-
-                     // This break prevents multiple player data from being confused during evaluation.
-                     // If one were going to dis-allow multiple players, this trackingId would facilitate
-                     // that feat.
-                     PlayerId = sd.TrackingId;
-
-
-                     //if (_bitmap != null)
-                         //_bitmap = AddSkeletonToDepthBitmap(sd, _bitmap, true);
-
                  }
              }
          }
@@ -358,23 +324,6 @@ namespace KinectWords
                          this.colorPixels,
                          this.colorBmp.PixelWidth * sizeof(int),
                          0);
-                 }
-             }
-         }
-
-         protected void GetWaitingMessages(Dictionary<int, GestureMapState> gestureMapDict)
-         {
-             foreach (var map in _gestureMaps)
-             {
-                 if (map.Value.MessagesWaiting)
-                 {
-                     foreach (var msg in map.Value.Messages)
-                     {
-                         debugMsg.AppendText(msg + "\r");
-                         debugMsg.ScrollToEnd();
-                     }
-                     map.Value.Messages.Clear();
-                     map.Value.MessagesWaiting = false;
                  }
              }
          }

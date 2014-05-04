@@ -105,8 +105,6 @@ namespace KinectWords
                 //Start items on window load
          private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            debugMsg.AppendText("Starting text!");
-
             this.gestureDetector = new SwipeGestureDetector();
             gestureDetector.MinimalPeriodBetweenGestures = 1000;
 
@@ -198,12 +196,8 @@ namespace KinectWords
          {
              if (gest == "SwipeToRight")
              {
-                 debugMsg.AppendText("Right swipe");
-             }
-
-             if (gest == "SwipeToLeft")
-             {
-                 debugMsg.AppendText("Left swipe");
+                 this.statusText.Text = "Right swipe detected";
+                 newwin.nextWord();
              }
          }
 
@@ -213,7 +207,6 @@ namespace KinectWords
              {
                  if (skeletonFrameData == null)
                  {
-                     debugMsg.AppendText("No skeleton!");
                      return;
                  }
 

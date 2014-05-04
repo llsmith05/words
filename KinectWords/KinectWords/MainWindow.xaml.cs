@@ -271,6 +271,18 @@ namespace KinectWords
                              newwin.speech("CAT");
                          }
                          break;
+                     case "SAD":
+                         if (null != newwin)
+                         {
+                             newwin.speech("SAD");
+                         }
+                         break;
+                     case "BED":
+                         if (null != newwin)
+                         {
+                             newwin.speech("BED");
+                         }
+                         break;
                  }
              }
          }

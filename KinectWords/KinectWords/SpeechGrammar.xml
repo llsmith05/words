@@ -4,6 +4,9 @@
       <item>
         <tag>AGE2_4</tag>
         <one-of>
+          <item> age two </item>
+          <item> age three </item>
+          <item> age four </item>
           <item> two </item>
           <item> three </item>
           <item> four </item>
@@ -12,6 +15,8 @@
       <item>
         <tag>AGE5_6</tag>
         <one-of>
+          <item> age five </item>
+          <item> age six </item>
           <item> five </item>
           <item> six </item>
         </one-of>
@@ -49,9 +54,9 @@
         </one-of>
       </item>
       <item>
-        <tag>DOG</tag>
+        <tag>SAD</tag>
         <one-of>
-          <item> dog </item>
+          <item> sad </item>
         </one-of>
       </item>
       <item>

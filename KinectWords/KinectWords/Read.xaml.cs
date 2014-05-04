@@ -25,10 +25,10 @@ namespace KinectWords
         {
             InitializeComponent();
             WordObject cat = new WordObject("CAT", "C", "A", "T");
-            WordObject dog = new WordObject("DOG", "D", "O", "G");
+            WordObject sad = new WordObject("SAD", "S", "A", "D");
             WordObject bed = new WordObject("BED", "B", "E", "D");
             this.Words.Add(cat);
-            this.Words.Add(dog);
+            this.Words.Add(sad);
             this.Words.Add(bed);
             this.count = 0;
         }
@@ -71,7 +71,11 @@ namespace KinectWords
             count = count + 1;
             if (count < Words.Count)
             {
-                this.statusText.Text = count.ToString() + " " + Words.Count.ToString();
+                 //this.statusText.Text = count.ToString() + " " + Words.Count.ToString();
+                if (count + 1 == Words.Count)
+                {
+                    buttonMenu_Next.Visibility = Visibility.Hidden;
+                } 
                 show();
             }
             else
